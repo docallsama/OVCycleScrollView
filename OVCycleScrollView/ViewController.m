@@ -23,7 +23,6 @@
 
 - (void)addCycleScrollView {
     OVCycleScrollView *cycleScrollView = [[OVCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)];
-    cycleScrollView.backgroundColor = [UIColor redColor];
     [cycleScrollView configCycleScrollView];
     [self.view addSubview:cycleScrollView];
     
