@@ -8,9 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OVCycleScrollViewDelegate <NSObject>
+
+- (void)onClickItemAtIndex:(int)index;
+
+- (void)onScrollAtIndex:(int)index;
+
+@end
+
 @interface OVCycleScrollView : UIView
 
-- (void)configCycleScrollView;
+@property (nonatomic, retain) NSArray *localImageNameArray;
+
+@property (nonatomic, weak) id<OVCycleScrollViewDelegate> cycleDelegate;
+
++ (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andLocalImageArray:(NSArray *)images;
 
 - (void)reloadScrollViewData;
 

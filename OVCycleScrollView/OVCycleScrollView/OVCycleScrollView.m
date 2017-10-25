@@ -7,20 +7,37 @@
 //
 
 #import "OVCycleScrollView.h"
+#import "OVCycleCollectionViewCell.h"
+
+static int reapeatCount = 100;
 
 @interface OVCycleScrollView () <UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource> {
     UICollectionView *mainCollectionView;
     int fullArrayCount;
-    NSArray *imageNameArray;
+    NSArray *imagePathsArray;
 }
 
 @end
 
 @implementation OVCycleScrollView
 
+- (void)setLocalImageNameArray:(NSArray *)localImageNameArray {
+    _localImageNameArray = localImageNameArray;
+    imagePathsArray = [localImageNameArray copy];
+    if (mainCollectionView) {
+        [self reloadScrollViewData];
+    }
+}
+
++ (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andLocalImageArray:(NSArray *)images {
+    OVCycleScrollView *cycleScrollView = [[OVCycleScrollView alloc] initWithFrame:frame];
+    cycleScrollView.localImageNameArray = images;
+    [cycleScrollView configCycleScrollView];
+    return cycleScrollView;
+}
+
 - (void)configCycleScrollView {
-    imageNameArray = @[@"demo_1.jpg",@"demo_2.jpg",@"demo_3.jpg"];
-    fullArrayCount = (int)imageNameArray.count * 100;
+    fullArrayCount = (int)imagePathsArray.count * reapeatCount;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -30,7 +47,7 @@
     layout.sectionInset = UIEdgeInsetsZero;
     
     mainCollectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:layout];
-    [mainCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [mainCollectionView registerClass:[OVCycleCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     mainCollectionView.dataSource = self;
     mainCollectionView.delegate = self;
     mainCollectionView.pagingEnabled = true;
@@ -41,7 +58,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     if (fullArrayCount > 0) {
-        [mainCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:fullArrayCount / 2  inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:false];
+        [mainCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:fullArrayCount / 2 inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:false];
     }
 }
 
@@ -56,20 +73,16 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-    [cell.contentView addSubview:imageView];
-    
+    OVCycleCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     int index = [self pageControlIndexWithCurrentCellIndex:indexPath.row];
-    
-    imageView.image = [UIImage imageNamed:imageNameArray[index]];
+    cell.displayImageView.image = [UIImage imageNamed:imagePathsArray[index]];
     
     return cell;
 }
 
 - (int)pageControlIndexWithCurrentCellIndex:(NSInteger)index
 {
-    return (int)index % imageNameArray.count;
+    return (int)index % imagePathsArray.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -78,19 +91,29 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"on click -> %d",[self pageControlIndexWithCurrentCellIndex:indexPath.row]);
+    int index = [self pageControlIndexWithCurrentCellIndex:indexPath.row];
+    if ([self.cycleDelegate respondsToSelector:@selector(onClickItemAtIndex:)]) {
+        [self.cycleDelegate onClickItemAtIndex:index];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    int rawIndex = scrollView.contentOffset.x / self.frame.size.width;
-    NSLog(@"on scroll -> %d",[self pageControlIndexWithCurrentCellIndex:rawIndex]);
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self scrollViewDidEndScrollingAnimation:scrollView];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    int rawIndex = scrollView.contentOffset.x / self.frame.size.width;
-    NSLog(@"on scroll -> %d",[self pageControlIndexWithCurrentCellIndex:rawIndex]);
+    int rawIndex = scrollView.contentOffset.x / scrollView.frame.size.width;
+    int targetIndex = [self pageControlIndexWithCurrentCellIndex:rawIndex];
+    if ([self.cycleDelegate respondsToSelector:@selector(onScrollAtIndex:)]) {
+        [self.cycleDelegate onScrollAtIndex:targetIndex];
+    }
+
 }
 
 

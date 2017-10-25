@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE8B68D11FA08464008CA770 /* OVCycleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8B68D01FA08464008CA770 /* OVCycleCollectionViewCell.m */; };
 		CEA523AC1F9D90E200672636 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA523AB1F9D90E200672636 /* main.m */; };
 		CEA523AF1F9D90E200672636 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA523AE1F9D90E200672636 /* AppDelegate.m */; };
 		CEA523B21F9D90E200672636 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA523B11F9D90E200672636 /* ViewController.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE8B68CF1FA08464008CA770 /* OVCycleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OVCycleCollectionViewCell.h; sourceTree = "<group>"; };
+		CE8B68D01FA08464008CA770 /* OVCycleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OVCycleCollectionViewCell.m; sourceTree = "<group>"; };
 		CEA523A71F9D90E200672636 /* OVCycleScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OVCycleScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA523AB1F9D90E200672636 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		CEA523AD1F9D90E200672636 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 			children = (
 				CEA523C21F9D933F00672636 /* OVCycleScrollView.h */,
 				CEA523C31F9D933F00672636 /* OVCycleScrollView.m */,
+				CE8B68CF1FA08464008CA770 /* OVCycleCollectionViewCell.h */,
+				CE8B68D01FA08464008CA770 /* OVCycleCollectionViewCell.m */,
 			);
 			path = OVCycleScrollView;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				CEA523C41F9D933F00672636 /* OVCycleScrollView.m in Sources */,
 				CEA523AF1F9D90E200672636 /* AppDelegate.m in Sources */,
 				CEA523AC1F9D90E200672636 /* main.m in Sources */,
+				CE8B68D11FA08464008CA770 /* OVCycleCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +349,7 @@
 				CEA523C01F9D90E200672636 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
