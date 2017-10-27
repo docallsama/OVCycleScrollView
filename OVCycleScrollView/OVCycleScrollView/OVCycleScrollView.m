@@ -15,6 +15,7 @@ static int reapeatCount = 100;
     UICollectionView *mainCollectionView;
     int fullArrayCount;
     NSArray *imagePathsArray;
+    NSTimer *timer;
 }
 
 @end
@@ -27,6 +28,20 @@ static int reapeatCount = 100;
     if (mainCollectionView) {
         [self reloadScrollViewData];
     }
+}
+
+- (void)setIsAutoScroll:(BOOL)isAutoScroll {
+    _isAutoScroll = isAutoScroll;
+    if (isAutoScroll == true) {
+        timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
+}
+
+- (void)scrollToNext {
+    CGFloat offset = mainCollectionView.contentOffset.x;
+    offset += self.frame.size.width;
+    [mainCollectionView setContentOffset:CGPointMake(offset, 0) animated:true];
 }
 
 + (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andLocalImageArray:(NSArray *)images {
@@ -99,6 +114,12 @@ static int reapeatCount = 100;
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.isAutoScroll) {
+        [timer invalidate];
+    }
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
 }
@@ -113,7 +134,16 @@ static int reapeatCount = 100;
     if ([self.cycleDelegate respondsToSelector:@selector(onScrollAtIndex:)]) {
         [self.cycleDelegate onScrollAtIndex:targetIndex];
     }
+    if (self.isAutoScroll && !timer.isValid) {
+        timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        NSLog(@"calling ");
+    }
+}
 
+- (void)dealloc {
+    [timer invalidate];
+    timer = nil;
 }
 
 

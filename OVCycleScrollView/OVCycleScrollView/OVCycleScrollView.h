@@ -18,6 +18,8 @@
 
 @interface OVCycleScrollView : UIView
 
+@property (nonatomic, assign) BOOL isAutoScroll;
+
 @property (nonatomic, retain) NSArray *localImageNameArray;
 
 @property (nonatomic, weak) id<OVCycleScrollViewDelegate> cycleDelegate;
