@@ -29,8 +29,6 @@
 }
 
 - (void)addCycleScrollView {
-    
-    
     //加载本地图片
     NSArray *localImageArray = @[@"demo_1.jpg",@"demo_2.jpg",@"demo_3.jpg"];
     OVCycleScrollView *cycleScrollView = [OVCycleScrollView setCycleScrollViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)
@@ -38,24 +36,26 @@
     cycleScrollView.isAutoScroll = true;
     
     [cycleScrollView reloadScrollViewData];
-    //延迟加载
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        cycleScrollView.localImageNameArray = @[@"demo_3.jpg",@"demo_2.jpg",@"demo_1.jpg"];
-    });
-    
-    cycleScrollView.cycleDelegate = self;
     
     [backScrollView addSubview:cycleScrollView];
     
     
+    //加载远程图片
     NSArray *remoteImageArray = @[@"https://avatars2.githubusercontent.com/u/17563998?s=460&v=4",
                                   @"https://avatars1.githubusercontent.com/u/433320?s=460&v=4",
                                   @"https://avatars2.githubusercontent.com/u/6493255?s=460&v=4"];
     OVCycleScrollView *remoteCycleScrollView = [OVCycleScrollView setCycleScrollViewWithFrame:CGRectMake(0, 220, self.view.frame.size.width, 200)
                                                                           andRemoteImageArray:remoteImageArray];
+    remoteCycleScrollView.gapTime = 2.5;
     remoteCycleScrollView.isAutoScroll = true;
-    
     [remoteCycleScrollView reloadScrollViewData];
+    
+    //延迟加载
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        remoteCycleScrollView.remoteImageURLArray = @[@"https://avatars2.githubusercontent.com/u/6493255?s=460&v=4",
+                                                      @"https://avatars1.githubusercontent.com/u/433320?s=460&v=4",
+                                                      @"https://avatars2.githubusercontent.com/u/17563998?s=460&v=4"];
+    });
     
     remoteCycleScrollView.cycleDelegate = self;
     
@@ -64,11 +64,11 @@
 
 #pragma mark - OVCycleScrollViewDelegate
 
-- (void)onClickItemAtIndex:(int)index {
+- (void)cycleScrollView:(OVCycleScrollView *)cycleScrollView onClickItemAtIndex:(int)index {
     NSLog(@"on click -> %d",index);
 }
 
-- (void)onScrollAtIndex:(int)index {
+- (void)cycleScrollView:(OVCycleScrollView *)cycleScrollView onScrollAtIndex:(int)index {
     NSLog(@"on scroll -> %d",index);
 }
 

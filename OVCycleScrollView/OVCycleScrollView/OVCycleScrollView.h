@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class OVCycleScrollView;
+
 @protocol OVCycleScrollViewDelegate <NSObject>
 
-- (void)onClickItemAtIndex:(int)index;
+@optional
 
-- (void)onScrollAtIndex:(int)index;
+- (void)cycleScrollView:(OVCycleScrollView *)cycleScrollView onClickItemAtIndex:(int)index;
+
+- (void)cycleScrollView:(OVCycleScrollView *)cycleScrollView onScrollAtIndex:(int)index;
 
 @end
 
@@ -23,6 +27,8 @@
 @property (nonatomic, retain) NSArray *localImageNameArray;
 
 @property (nonatomic, retain) NSArray *remoteImageURLArray;
+
+@property (nonatomic, assign) NSTimeInterval gapTime;
 
 @property (nonatomic, weak) id<OVCycleScrollViewDelegate> cycleDelegate;
 

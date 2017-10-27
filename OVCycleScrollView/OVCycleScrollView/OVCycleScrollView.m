@@ -43,9 +43,15 @@ static int reapeatCount = 100;
 - (void)setIsAutoScroll:(BOOL)isAutoScroll {
     _isAutoScroll = isAutoScroll;
     if (isAutoScroll == true) {
-        timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        [self configTimer];
     }
+}
+
+- (NSTimeInterval)gapTime {
+    if (_gapTime == 0) {
+        return 1;
+    }
+    return _gapTime;
 }
 
 - (void)scrollToNext {
@@ -99,7 +105,7 @@ static int reapeatCount = 100;
 }
 
 - (void)configTimer {
-    timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
+    timer = [NSTimer timerWithTimeInterval:self.gapTime target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 }
 
@@ -139,8 +145,8 @@ static int reapeatCount = 100;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     int index = [self pageControlIndexWithCurrentCellIndex:indexPath.row];
-    if ([self.cycleDelegate respondsToSelector:@selector(onClickItemAtIndex:)]) {
-        [self.cycleDelegate onClickItemAtIndex:index];
+    if ([self.cycleDelegate respondsToSelector:@selector(cycleScrollView:onClickItemAtIndex:)]) {
+        [self.cycleDelegate cycleScrollView:self onClickItemAtIndex:index];
     }
 }
 
@@ -169,8 +175,8 @@ static int reapeatCount = 100;
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     int rawIndex = scrollView.contentOffset.x / scrollView.frame.size.width;
     int targetIndex = [self pageControlIndexWithCurrentCellIndex:rawIndex];
-    if ([self.cycleDelegate respondsToSelector:@selector(onScrollAtIndex:)]) {
-        [self.cycleDelegate onScrollAtIndex:targetIndex];
+    if ([self.cycleDelegate respondsToSelector:@selector(cycleScrollView:onScrollAtIndex:)]) {
+        [self.cycleDelegate cycleScrollView:self onScrollAtIndex:targetIndex];
     }
 }
 
