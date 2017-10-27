@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F682DDFC5DFE4A7BB308A0C /* libPods-OVCycleScrollView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA40FCAFCAEF0CE356D9DC26 /* libPods-OVCycleScrollView.a */; };
 		CE8B68D11FA08464008CA770 /* OVCycleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8B68D01FA08464008CA770 /* OVCycleCollectionViewCell.m */; };
 		CEA523AC1F9D90E200672636 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA523AB1F9D90E200672636 /* main.m */; };
 		CEA523AF1F9D90E200672636 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEA523AE1F9D90E200672636 /* AppDelegate.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		71BF486A90844C73AE6C3223 /* Pods-OVCycleScrollView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OVCycleScrollView.release.xcconfig"; path = "Pods/Target Support Files/Pods-OVCycleScrollView/Pods-OVCycleScrollView.release.xcconfig"; sourceTree = "<group>"; };
+		CA40FCAFCAEF0CE356D9DC26 /* libPods-OVCycleScrollView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OVCycleScrollView.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE8B68CF1FA08464008CA770 /* OVCycleCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OVCycleCollectionViewCell.h; sourceTree = "<group>"; };
 		CE8B68D01FA08464008CA770 /* OVCycleCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OVCycleCollectionViewCell.m; sourceTree = "<group>"; };
 		CEA523A71F9D90E200672636 /* OVCycleScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OVCycleScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +41,7 @@
 		CEA523CC1F9D96A800672636 /* demo_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo_1.jpg; sourceTree = "<group>"; };
 		CEA523CD1F9D96A800672636 /* demo_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo_2.jpg; sourceTree = "<group>"; };
 		CEA523CE1F9D96A800672636 /* demo_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = demo_3.jpg; sourceTree = "<group>"; };
+		DF109C20683BA217BC5B9E09 /* Pods-OVCycleScrollView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OVCycleScrollView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OVCycleScrollView/Pods-OVCycleScrollView.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F682DDFC5DFE4A7BB308A0C /* libPods-OVCycleScrollView.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8EBE60F97523DB36E38B42F5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DF109C20683BA217BC5B9E09 /* Pods-OVCycleScrollView.debug.xcconfig */,
+				71BF486A90844C73AE6C3223 /* Pods-OVCycleScrollView.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CEA5239E1F9D90E200672636 = {
 			isa = PBXGroup;
 			children = (
 				CEA523A91F9D90E200672636 /* OVCycleScrollView */,
 				CEA523A81F9D90E200672636 /* Products */,
+				8EBE60F97523DB36E38B42F5 /* Pods */,
+				E5E5C6FB1854A8E50573AFE2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -114,6 +130,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		E5E5C6FB1854A8E50573AFE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CA40FCAFCAEF0CE356D9DC26 /* libPods-OVCycleScrollView.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,9 +145,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CEA523BE1F9D90E200672636 /* Build configuration list for PBXNativeTarget "OVCycleScrollView" */;
 			buildPhases = (
+				38AF550F8E50EE73A4592606 /* [CP] Check Pods Manifest.lock */,
 				CEA523A31F9D90E200672636 /* Sources */,
 				CEA523A41F9D90E200672636 /* Frameworks */,
 				CEA523A51F9D90E200672636 /* Resources */,
+				A88A4B959B69944029538C72 /* [CP] Embed Pods Frameworks */,
+				D94CB4B1093D2DF6F6899200 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,6 +209,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		38AF550F8E50EE73A4592606 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OVCycleScrollView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A88A4B959B69944029538C72 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OVCycleScrollView/Pods-OVCycleScrollView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D94CB4B1093D2DF6F6899200 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OVCycleScrollView/Pods-OVCycleScrollView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CEA523A31F9D90E200672636 /* Sources */ = {
@@ -308,6 +386,7 @@
 		};
 		CEA523BF1F9D90E200672636 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DF109C20683BA217BC5B9E09 /* Pods-OVCycleScrollView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OVCycleScrollView/Info.plist;
@@ -320,6 +399,7 @@
 		};
 		CEA523C01F9D90E200672636 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 71BF486A90844C73AE6C3223 /* Pods-OVCycleScrollView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OVCycleScrollView/Info.plist;

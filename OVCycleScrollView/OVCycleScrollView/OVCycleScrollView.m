@@ -8,6 +8,7 @@
 
 #import "OVCycleScrollView.h"
 #import "OVCycleCollectionViewCell.h"
+#import <UIImageView+WebCache.h>
 
 static int reapeatCount = 100;
 
@@ -30,6 +31,15 @@ static int reapeatCount = 100;
     }
 }
 
+- (void)setRemoteImageURLArray:(NSArray *)remoteImageURLArray {
+    _remoteImageURLArray = remoteImageURLArray;
+    imagePathsArray = [remoteImageURLArray copy];
+    
+    if (mainCollectionView) {
+        [self reloadScrollViewData];
+    }
+}
+
 - (void)setIsAutoScroll:(BOOL)isAutoScroll {
     _isAutoScroll = isAutoScroll;
     if (isAutoScroll == true) {
@@ -47,6 +57,13 @@ static int reapeatCount = 100;
 + (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andLocalImageArray:(NSArray *)images {
     OVCycleScrollView *cycleScrollView = [[OVCycleScrollView alloc] initWithFrame:frame];
     cycleScrollView.localImageNameArray = images;
+    [cycleScrollView configCycleScrollView];
+    return cycleScrollView;
+}
+
++ (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andRemoteImageArray:(NSArray *)images {
+    OVCycleScrollView *cycleScrollView = [[OVCycleScrollView alloc] initWithFrame:frame];
+    cycleScrollView.remoteImageURLArray = images;
     [cycleScrollView configCycleScrollView];
     return cycleScrollView;
 }
@@ -81,6 +98,16 @@ static int reapeatCount = 100;
     [mainCollectionView reloadData];
 }
 
+- (void)configTimer {
+    timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)invalidateTimer {
+    [timer invalidate];
+    timer = nil;
+}
+
 #pragma mark - UICollectionView DataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -90,7 +117,12 @@ static int reapeatCount = 100;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     OVCycleCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     int index = [self pageControlIndexWithCurrentCellIndex:indexPath.row];
-    cell.displayImageView.image = [UIImage imageNamed:imagePathsArray[index]];
+    NSString *imageString = imagePathsArray[index];
+    if ([imageString hasPrefix:@"http"]) {
+        [cell.displayImageView sd_setImageWithURL:[NSURL URLWithString:imageString] placeholderImage:nil];
+    } else {
+        cell.displayImageView.image = [UIImage imageNamed:imageString];
+    }
     
     return cell;
 }
@@ -114,14 +146,20 @@ static int reapeatCount = 100;
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+}
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (self.isAutoScroll) {
-        [timer invalidate];
+        [self invalidateTimer];
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (self.isAutoScroll && !timer.isValid) {
+        [self configTimer];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -134,16 +172,10 @@ static int reapeatCount = 100;
     if ([self.cycleDelegate respondsToSelector:@selector(onScrollAtIndex:)]) {
         [self.cycleDelegate onScrollAtIndex:targetIndex];
     }
-    if (self.isAutoScroll && !timer.isValid) {
-        timer = [NSTimer timerWithTimeInterval:2 target:self selector:@selector(scrollToNext) userInfo:nil repeats:YES];
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-        NSLog(@"calling ");
-    }
 }
 
 - (void)dealloc {
-    [timer invalidate];
-    timer = nil;
+    [self invalidateTimer];
 }
 
 

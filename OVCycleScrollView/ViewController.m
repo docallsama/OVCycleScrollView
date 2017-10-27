@@ -9,7 +9,9 @@
 #import "ViewController.h"
 #import "OVCycleScrollView.h"
 
-@interface ViewController () <OVCycleScrollViewDelegate>
+@interface ViewController () <OVCycleScrollViewDelegate> {
+    UIScrollView *backScrollView;
+}
 
 @end
 
@@ -18,18 +20,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    backScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    backScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 1000);
+    [self.view addSubview:backScrollView];
+    
     [self addCycleScrollView];
 }
 
 - (void)addCycleScrollView {
-    UIScrollView *backScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 400)];
-    backScrollView.contentSize = CGSizeMake(self.view.frame.size.width, 600);
-    [self.view addSubview:backScrollView];
     
+    
+    //加载本地图片
     NSArray *localImageArray = @[@"demo_1.jpg",@"demo_2.jpg",@"demo_3.jpg"];
     OVCycleScrollView *cycleScrollView = [OVCycleScrollView setCycleScrollViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200)
                                                                      andLocalImageArray:localImageArray];
-    [self.view addSubview:cycleScrollView];
     cycleScrollView.isAutoScroll = true;
     
     [cycleScrollView reloadScrollViewData];
@@ -41,6 +46,20 @@
     cycleScrollView.cycleDelegate = self;
     
     [backScrollView addSubview:cycleScrollView];
+    
+    
+    NSArray *remoteImageArray = @[@"https://avatars2.githubusercontent.com/u/17563998?s=460&v=4",
+                                  @"https://avatars1.githubusercontent.com/u/433320?s=460&v=4",
+                                  @"https://avatars2.githubusercontent.com/u/6493255?s=460&v=4"];
+    OVCycleScrollView *remoteCycleScrollView = [OVCycleScrollView setCycleScrollViewWithFrame:CGRectMake(0, 220, self.view.frame.size.width, 200)
+                                                                          andRemoteImageArray:remoteImageArray];
+    remoteCycleScrollView.isAutoScroll = true;
+    
+    [remoteCycleScrollView reloadScrollViewData];
+    
+    remoteCycleScrollView.cycleDelegate = self;
+    
+    [backScrollView addSubview:remoteCycleScrollView];
 }
 
 #pragma mark - OVCycleScrollViewDelegate

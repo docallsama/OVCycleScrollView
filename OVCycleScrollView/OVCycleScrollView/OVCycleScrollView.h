@@ -22,9 +22,13 @@
 
 @property (nonatomic, retain) NSArray *localImageNameArray;
 
+@property (nonatomic, retain) NSArray *remoteImageURLArray;
+
 @property (nonatomic, weak) id<OVCycleScrollViewDelegate> cycleDelegate;
 
 + (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andLocalImageArray:(NSArray *)images;
+
++ (instancetype)setCycleScrollViewWithFrame:(CGRect)frame andRemoteImageArray:(NSArray *)images;
 
 - (void)reloadScrollViewData;
 
